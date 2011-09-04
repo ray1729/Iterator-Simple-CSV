@@ -45,4 +45,12 @@ $tmpfile->close;
     ok ! $it->next;
 }
 
+{
+    note "Testing column_names";
+    ok my $it = icsv( $tmpfile->filename, column_names => [ qw( foo bar baz ) ], skip_header => 1 );
+    is_deeply $it->next, { foo => 1, bar => 2, baz => 3 };
+    is_deeply $it->next, { foo => 4, bar => 5, baz => 6 };
+    ok ! $it->next;
+}
+
 done_testing();

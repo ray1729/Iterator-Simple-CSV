@@ -19,8 +19,9 @@ sub icsv {
     my $input = shift;
     my $opts = @_ == 1 ? shift @_ : +{ @_ };
 
-    my $use_header = delete $opts->{use_header};
-    my $skip_header = delete $opts->{skip_header};
+    my $use_header   = delete $opts->{use_header};
+    my $skip_header  = delete $opts->{skip_header};
+    my $column_names = delete $opts->{column_names};    
     
     my $io;
     if ( ref( $input ) ) {
@@ -42,7 +43,11 @@ sub icsv {
         $io->getline;
     }
     elsif ( $use_header ) {
-        $csv->column_names( $csv->getline( $io ) );
+        $column_names = $csv->getline( $io );
+    }
+
+    if ( $column_names ) {                
+        $csv->column_names( $column_names );
         $fetch_row_method = 'getline_hr';
     }
 
