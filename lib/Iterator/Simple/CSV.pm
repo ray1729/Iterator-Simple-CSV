@@ -7,8 +7,6 @@ use Sub::Exporter -setup => {
     exports => [ 'icsv' ]
 };
 
-use Smart::Comments;
-
 use Text::CSV_XS;
 use IO::Handle;
 use IO::File;
